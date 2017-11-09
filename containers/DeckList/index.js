@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Platform, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { white, blue, gray } from '../../utils/colors'
@@ -33,19 +33,22 @@ const Questions = styled.Text`
   font-size: 20px;
 `
 
-function DeckCard ({ title, questions }) {
-  return (
-    <Card>
-      <Title>{title}</Title>
-      <Questions>{questions.length} questions.</Questions>
-    </Card>
-  )
-}
-
 class DeckList extends Component {
-  renderItem = ({ item }) => <DeckCard {...item}/>;
+  renderItem = ({ item }) => {
+    const { id, title, questions } = item
+    return (
+      <TouchableOpacity onPress={() => this.onPressItem(item)}>
+        <Card>
+          <Title>{title}</Title>
+          <Questions>{questions.length} questions.</Questions>
+        </Card>
+      </TouchableOpacity>
+    )
+  };
 
   keyExtractor = (item) => item.id;
+
+  onPressItem = (deck) => this.props.navigation.navigate('DeckView', { deck })
 
   render() {
     const { decks } = this.props
