@@ -1,5 +1,7 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import { Constants } from 'expo';
 import DeckList from '../../containers/DeckList';
 import NewDeck from '../../containers/NewDeck';
 import NewQuestion from '../../containers/NewQuestion';
@@ -25,7 +27,10 @@ const Tabs = TabNavigator({
   }
 }, {
     navigationOptions: {
-      header: null
+      header: <MyStatusBar tanslucent  backgroundColor={blue} barStyle='light-content'/> || null,
+      headerStyle: {
+        height: Constants.statusBarHeight
+      }
     },
 })
 
@@ -57,3 +62,11 @@ export default MainNavigator = StackNavigator({
     })
   }
 })
+
+function MyStatusBar ({ backgroundColor, ...props }) {
+  return (
+      <View style={{ backgroundColor, height: Constants.statusBarHeight}}>
+        <StatusBar tanslucent backgroundColor={backgroundColor} {...props}/>
+      </View>
+  )
+}

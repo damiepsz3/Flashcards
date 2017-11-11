@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { addQuestion } from '../../actions'
+import uuidv1 from 'uuid/v1'
 
 class NewQuestion extends Component {
   state = {
+    id: uuidv1(),
+    parentId: this.props.deck.id,
     question: 'Add a question ❔',
     answer: 'And the answer here 😄'
   }
 
+  submit() {
+
+  }
 
   render() {
     const { deck } = this.props
@@ -32,7 +39,7 @@ class NewQuestion extends Component {
             value={answer}
           />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.addQuestion(this.state)}>
           <Text>SUBMIT</Text>
         </TouchableOpacity>
       </View>
@@ -47,4 +54,4 @@ function mapStateToProps({ decks }, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(NewQuestion);
+export default connect(mapStateToProps, { addQuestion })(NewQuestion);
