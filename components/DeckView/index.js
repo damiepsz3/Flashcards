@@ -21,15 +21,15 @@ const Questions = styled.Text`
   font-size: 40px;
 `
 
-const Button = styled.Text`
+const ButtonText = styled.Text`
   text-align: center;
   font-size: 24px;
-  color: ${props => props.primary ? green : purple};
+  color: ${props => props.add ? green : purple};
 `
 
 class DeckView extends Component {
   render() {
-    const { title, questions } = this.props.navigation.state.params.deck
+    const { id, title, questions } = this.props.navigation.state.params.deck
     return (
       <View style={{flex: 1}}>
         <Containers>
@@ -38,13 +38,13 @@ class DeckView extends Component {
         </Containers>
         <Containers>
           <View>
-            <TouchableOpacity>
-              <Button primary>Add Card</Button>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('NewQuestion', { deckId: id })}>
+              <ButtonText add>Add Card</ButtonText>
             </TouchableOpacity>
           </View>
           <View style={{margin:20}}>
             <TouchableOpacity>
-              <Button>Start Quiz</Button>
+              <ButtonText>Start Quiz</ButtonText>
             </TouchableOpacity>
           </View>
         </Containers>

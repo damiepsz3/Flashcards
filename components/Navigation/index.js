@@ -2,6 +2,8 @@ import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import DeckList from '../../containers/DeckList';
 import NewDeck from '../../containers/NewDeck';
+import NewQuestion from '../../containers/NewQuestion';
+
 import DeckView from '../DeckView';
 import { blue, white, gray } from '../../utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -29,7 +31,10 @@ const Tabs = TabNavigator({
 
 export default MainNavigator = StackNavigator({
   Home: {
-    screen: Tabs
+    screen: Tabs,
+    navigationOptions: ({navigation}) => ({
+      title: 'Decks',
+    })
   },
   DeckView: {
     screen: DeckView,
@@ -37,7 +42,17 @@ export default MainNavigator = StackNavigator({
       title: navigation.state.params.deck.title,
       headerTintColor: blue,
       headerStyle: {
-        backgroundColor: white
+        backgroundColor: white,
+      }
+    })
+  },
+  NewQuestion: {
+    screen: NewQuestion,
+    navigationOptions: ({navigation}) => ({
+      title: 'Add Question',
+      headerTintColor: blue,
+      headerStyle: {
+        backgroundColor: white,
       }
     })
   }
