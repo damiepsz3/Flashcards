@@ -56,7 +56,6 @@ class NewQuestion extends Component {
   render() {
     const { deck } = this.props
     const { question, answer } = this.state
-    console.log(question, answer);
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
