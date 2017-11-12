@@ -5,8 +5,8 @@ import { Constants } from 'expo';
 import DeckList from '../../containers/DeckList';
 import NewDeck from '../../containers/NewDeck';
 import NewQuestion from '../../containers/NewQuestion';
+import DeckView from '../../containers/DeckView';
 
-import DeckView from '../DeckView';
 import { blue, white, gray } from '../../utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 

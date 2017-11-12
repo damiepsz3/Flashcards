@@ -1,46 +1,85 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { addQuestion } from '../../actions'
-import uuidv1 from 'uuid/v1'
+import { addQuestion } from '../../actions';
+import { white, gray, blue } from '../../utils/colors'
+import uuidv1 from 'uuid/v1';
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  inputContainer: {
+    backgroundColor: white,
+    marginBottom: 1,
+  },
+  submitBton: {
+    padding: 25,
+    alignItems: 'center',
+  },
+  btnText: {
+    fontSize: 30,
+    color: blue,
+  },
+  labelInput: {
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    fontSize: 20,
+  }
+})
 
 class NewQuestion extends Component {
   state = {
     id: uuidv1(),
     parentId: this.props.deck.id,
-    question: 'Add a question ❔',
-    answer: 'And the answer here 😄'
+    question: '',
+    answer: ''
   }
 
-  submit() {
-
+  submit(state) {
+    const { question, answer } = state
+    if(question.length > 0 && answer.length > 0){
+      this.props.addQuestion(state);
+      this.props.navigation.goBack()
+    } else {
+      Alert.alert(
+        'Required fields empty',
+        'Some required fields are empty, please fill all the fields and try to submit your question again.'
+      )
+    }
   }
 
   render() {
     const { deck } = this.props
     const { question, answer } = this.state
+    console.log(question, answer);
     return (
-      <View>
-        <View>
-          <Text>
-            Question:
-          </Text>
-          <TextInput
-            onChange={(question => this.setState({ question }))}
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.labelInput}
+            placeholder='Add a question ❔'
+            multiline = {true}
+            onChangeText={question => this.setState({ question })}
             value={question}
           />
         </View>
-        <View>
-          <Text>
-            Answer:
-          </Text>
-          <TextInput
-            onChange={(answer) => this.setState({ answer })}
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.labelInput}
+            placeholder='And the answer here 😄'
+            multiline = {true}
+            onChangeText={(answer) => this.setState({ answer })}
             value={answer}
           />
         </View>
-        <TouchableOpacity onPress={() => this.props.addQuestion(this.state)}>
-          <Text>SUBMIT</Text>
+        <TouchableOpacity
+          style={styles.submitBton}
+          onPress={() => this.submit(this.state)}
+        >
+          <Text style={styles.btnText}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     );

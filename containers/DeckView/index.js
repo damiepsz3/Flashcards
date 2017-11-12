@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { white, blue, gray, green, purple } from '../../utils/colors'
@@ -29,7 +30,7 @@ const ButtonText = styled.Text`
 
 class DeckView extends Component {
   render() {
-    const { id, title, questions } = this.props.navigation.state.params.deck
+    const { id, title, questions } = this.props.deck
     return (
       <View style={{flex: 1}}>
         <Containers>
@@ -54,4 +55,11 @@ class DeckView extends Component {
 
 }
 
-export default DeckView;
+function mapStateToProps({ decks }, { navigation }) {
+  const { deck } = navigation.state.params
+  return {
+    deck: decks[deck.id]
+  }
+}
+
+export default connect(mapStateToProps)(DeckView);
