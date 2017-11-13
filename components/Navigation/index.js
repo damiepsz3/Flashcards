@@ -1,11 +1,12 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
-import { Constants } from 'expo';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
 import DeckList from '../../containers/DeckList';
 import NewDeck from '../../containers/NewDeck';
 import NewQuestion from '../../containers/NewQuestion';
 import DeckView from '../../containers/DeckView';
+import Header from '../../components/Header'
 
 import { blue, white, gray } from '../../utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -25,36 +26,51 @@ const Tabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add-circle' size={30} color={tintColor}/>
     }
   }
+}, {
+  navigationOptions: {
+    header: Header({
+      statusColor:blue,
+    })
+  }
 })
 
 export default MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
     navigationOptions: ({ navigation }) => ({
-      title: 'Decks',
-      headerStyle: {
-        paddingTop: 0,
-      }
+      header: Header({
+        statusColor: blue,
+        headerColor: blue,
+        titleColor: white,
+        title: 'Flashcards',
+      })
     })
   },
   DeckView: {
     screen: DeckView,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.deck.title,
-      headerTintColor: blue,
-      headerStyle: {
-        backgroundColor: white,
-      }
+      header: Header({
+        statusColor: blue,
+        title: navigation.state.params.deck.title,
+        LeftComponent: leftButton(navigation.goBack, <Ionicons name='ios-arrow-back-outline' size={35} color={blue}/>)
+      })
     })
   },
   NewQuestion: {
     screen: NewQuestion,
-    navigationOptions: ({navigation}) => ({
-      title: 'Add Question',
-      headerTintColor: blue,
-      headerStyle: {
-        backgroundColor: white,
-      }
+    navigationOptions: ({ navigation }) => ({
+      header: Header({
+        statusColor: blue,
+        title: 'Add a question',
+        LeftComponent: leftButton(navigation.goBack, <Ionicons name='ios-arrow-back-outline' size={35} color={blue}/>)
+      })
     })
   }
 })
+
+function leftButton(funct, icon) {
+  return (
+    <TouchableOpacity onPress={() => funct()}>
+      <View style={{alignItems: 'center'}}>{icon}</View>
+    </TouchableOpacity>)
+}

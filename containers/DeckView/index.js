@@ -1,58 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { white, blue, gray, green, purple } from '../../utils/colors'
-
-
-const Containers = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`
-const Title = styled.Text`
-  color: ${blue};
-  font-size: 50px;
-  font-weight: bold;
-  margin-bottom: 10px;
-`
-
-const Questions = styled.Text`
-  color: ${gray};
-  font-size: 40px;
-`
-
-const ButtonText = styled.Text`
-  text-align: center;
-  font-size: 24px;
-  color: ${props => props.add ? green : purple};
-`
 
 class DeckView extends Component {
   render() {
     const { id, title, questions } = this.props.deck
     return (
       <View style={{flex: 1}}>
-        <Containers>
-          <Title>{title}</Title>
-          <Questions>{questions.length} questions.</Questions>
-        </Containers>
-        <Containers>
+        <View style={styles.container}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.question}>{questions.length} cards.</Text>
+        </View>
+        <View style={styles.container}>
           <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('NewQuestion', { deckId: id })}>
-              <ButtonText add>Add Card</ButtonText>
+              <Text style={[styles.btnText,{ color: green}]}>Add Card</Text>
             </TouchableOpacity>
           </View>
           <View style={{margin:20}}>
             <TouchableOpacity>
-              <ButtonText>Start Quiz</ButtonText>
+              <Text style={[styles.btnText,{ color: purple}]}>Start Quiz</Text>
             </TouchableOpacity>
           </View>
-        </Containers>
+        </View>
       </View>
     );
   }
-
 }
 
 function mapStateToProps({ decks }, { navigation }) {
@@ -61,5 +35,27 @@ function mapStateToProps({ decks }, { navigation }) {
     deck: decks[deck.id]
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    color: blue,
+    fontSize: 50,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  question: {
+    color: gray,
+    fontSize: 40,
+  },
+  btnText: {
+    textAlign: 'center',
+    fontSize: 24,
+  }
+})
 
 export default connect(mapStateToProps)(DeckView);

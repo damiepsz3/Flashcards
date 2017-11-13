@@ -44,7 +44,12 @@ class NewQuestion extends Component {
     const { question, answer } = state
     if(question.length > 0 && answer.length > 0){
       this.props.addQuestion(state);
-      this.props.navigation.goBack()
+      this.setState({
+        id: uuidv1(),
+        parentId: this.props.deck.id,
+        question: '',
+        answer: ''
+      })
     } else {
       Alert.alert(
         'Required fields empty',
