@@ -25,25 +25,21 @@ const Tabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add-circle' size={30} color={tintColor}/>
     }
   }
-}, {
-    navigationOptions: {
-      header: <MyStatusBar tanslucent  backgroundColor={blue} barStyle='light-content'/> || null,
-      headerStyle: {
-        height: Constants.statusBarHeight
-      }
-    },
 })
 
 export default MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Decks',
+      headerStyle: {
+        paddingTop: 0,
+      }
     })
   },
   DeckView: {
     screen: DeckView,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.deck.title,
       headerTintColor: blue,
       headerStyle: {
@@ -62,11 +58,3 @@ export default MainNavigator = StackNavigator({
     })
   }
 })
-
-function MyStatusBar ({ backgroundColor, ...props }) {
-  return (
-      <View style={{ backgroundColor, height: Constants.statusBarHeight}}>
-        <StatusBar tanslucent backgroundColor={backgroundColor} {...props}/>
-      </View>
-  )
-}
