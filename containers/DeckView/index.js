@@ -15,12 +15,12 @@ class DeckView extends Component {
         <View style={styles.container}>
           <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('NewQuestion', { deckId: id })}>
-              <Text style={[styles.btnText,{ color: green}]}>Add Card</Text>
+              <Text style={[styles.btnText,{ color: green }]}>Add Card</Text>
             </TouchableOpacity>
           </View>
           <View style={{margin:20}}>
-            <TouchableOpacity>
-              <Text style={[styles.btnText,{ color: purple}]}>Start Quiz</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Quiz', { deckId: id })}>
+              <Text style={[styles.btnText,{ color: purple }]}>Start Quiz</Text>
             </TouchableOpacity>
           </View>
         </View>

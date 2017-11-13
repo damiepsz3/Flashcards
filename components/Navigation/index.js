@@ -6,9 +6,11 @@ import DeckList from '../../containers/DeckList';
 import NewDeck from '../../containers/NewDeck';
 import NewQuestion from '../../containers/NewQuestion';
 import DeckView from '../../containers/DeckView';
-import Header from '../../components/Header'
+import Header from '../../components/Header';
+import Quiz from '../../containers/Quiz';
 
-import { blue, white, gray } from '../../utils/colors';
+
+import { blue, white, gray, green, purple } from '../../utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 const Tabs = TabNavigator({
@@ -60,8 +62,18 @@ export default MainNavigator = StackNavigator({
     screen: NewQuestion,
     navigationOptions: ({ navigation }) => ({
       header: Header({
-        statusColor: blue,
+        statusColor: green,
         title: 'Add a question',
+        LeftComponent: leftButton(navigation.goBack, <Ionicons name='ios-arrow-back-outline' size={35} color={blue}/>)
+      })
+    })
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: ({ navigation }) => ({
+      header: Header({
+        statusColor: purple,
+        title: 'Quiz',
         LeftComponent: leftButton(navigation.goBack, <Ionicons name='ios-arrow-back-outline' size={35} color={blue}/>)
       })
     })
