@@ -2,7 +2,7 @@
 For the UdaciCards project, you will build a mobile application (Android or iOS - or both) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
 ## Installation
 1. Clone the project: `git clone https://github.com/damiepsz3/Flashcards.git`
-2. In the project directory run: `npm install`
+2. In the project directory run: `yarn`
 ## Usage
 In the project directory, you can run:
 
