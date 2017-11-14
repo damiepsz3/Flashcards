@@ -7,7 +7,7 @@ import {
   Animated
 } from 'react-native';
 import { connect } from 'react-redux';
-import { white, gray, blue, green, red } from '../../utils/colors'
+import { white, gray, blue, green, red, purple } from '../../utils/colors'
 
 class Quiz extends Component {
   state = {
@@ -24,12 +24,44 @@ class Quiz extends Component {
     }))
   }
 
+  resetQuiz = () => {
+    this.setState({
+      counter: 1,
+      corrects: 0,
+      showingQuestion: true,
+    })
+  }
+
   render() {
     const { questions } = this.props
-    const { counter, showingQuestion } = this.state
+    const { counter, showingQuestion, corrects } = this.state
+
+
     if(counter > questions.length) {
-      return (<Text>Done</Text>)
+      return (
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <Text style={{marginBottom: 10}}>You have finished the Quiz</Text>
+            <Text style={styles.cardText}>Score: {corrects} correct from {questions.length} questions</Text>
+            <Text style={styles.percn}>{(corrects * 100)/questions.length}%</Text>
+          </View>
+          <View>
+            <TouchableOpacity onPress={() => this.resetQuiz()}>
+              <Text style={[styles.respBtn, { backgroundColor: purple }]}>
+                Take quiz again
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+              <Text style={[styles.respBtn, { backgroundColor: blue }]}>
+                Desk list
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
     }
+
+
     const { question, answer } = questions[counter - 1]
     return (
       <View style={styles.container}>
@@ -104,6 +136,10 @@ const styles = StyleSheet.create({
   },
   toggleBtn: {
     fontSize: 20,
+    color: blue,
+  },
+  percn: {
+    fontSize: 25,
     color: blue,
   }
 })

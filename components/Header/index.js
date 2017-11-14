@@ -3,7 +3,7 @@ import { Constants } from 'expo';
 import { View, Text, StatusBar, StyleSheet } from 'react-native';
 import { blue, white, gray, defaultGray } from '../../utils/colors';
 
-export default function Header ({ statusColor, headerColor = white, titleColor = blue, title = '', LeftComponent = 1, barStyle = 'light-content'}) {
+export default function Header ({ statusColor, headerColor = white, titleColor, title = '', LeftComponent = 1, barStyle = 'light-content'}) {
   styles = StyleSheet.create({
     stsBarContainer: {
       backgroundColor: statusColor,
@@ -29,7 +29,7 @@ export default function Header ({ statusColor, headerColor = white, titleColor =
       flex: 1,
     },
     title: {
-      fontSize: 17,
+      fontSize: 18,
       fontWeight: '600',
       color: titleColor,
       textAlign: 'center',
