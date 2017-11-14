@@ -22,6 +22,15 @@ class DeckList extends Component {
 
   render() {
     const { decks } = this.props
+    if (decks.length === 0) {
+      return (
+        <View style={{alignItems: 'center', margin: 20, backgroundColor: white, padding: 10}}>
+          <Text style={{fontSize: 20}}>You don't have any Deck yet</Text>
+          <Text style={{fontSize: 20, marginTop: 10}}>Go ahead and add one ⬇️</Text>
+        </View>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <FlatList

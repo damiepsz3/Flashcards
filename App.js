@@ -7,9 +7,12 @@ import reducers from './reducers'
 import { persistStore, persistReducer } from 'redux-persist'
 import { PersistGate } from 'redux-persist/es/integration/react'
 import storage from 'redux-persist/lib/storage'
+import { setLocalNotification } from './utils/helpers'
+
+const REDUCER_KEY = 'Flashcards:reducer'
 
 const config = {
-  key: 'root',
+  key: REDUCER_KEY,
   storage
 }
 
@@ -18,6 +21,10 @@ const store = createStore(reducer)
 const persistor = persistStore(store)
 
 export default class App extends React.Component {
+  componentDidMount () {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>
