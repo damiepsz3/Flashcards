@@ -1,17 +1,34 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import MainNavigator from './components/Navigation';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducers'
+import reducers from './reducers'
+import { persistStore, persistReducer } from 'redux-persist'
+import { PersistGate } from 'redux-persist/es/integration/react'
+import storage from 'redux-persist/lib/storage'
+
+const config = {
+  key: 'root',
+  storage
+}
+
+const reducer = persistReducer(config, reducers)
+const store = createStore(reducer)
+const persistor = persistStore(store)
 
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <MainNavigator />
-        </View>
+      <Provider store={store}>
+        <PersistGate
+          loading={<Text>Loading...</Text>}
+          persistor={persistor}
+        >
+          <View style={{flex: 1}}>
+            <MainNavigator />
+          </View>
+        </PersistGate>
       </Provider>
     );
   }
