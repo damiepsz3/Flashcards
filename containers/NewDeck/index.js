@@ -51,11 +51,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 40,
-    padding: 20,
+    padding: 30,
     textAlign: 'center',
   },
   titleInput: {
-    paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 20,
     paddingRight: 20,
