@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
-import { ADD_QUESTION } from '../actions'
+import {
+  ADD_QUESTION,
+  ADD_DECK
+ } from '../actions'
 
 const initialDecks = {
   'f03bfcc2-c588-11e7-abc4-cec278b6b50a': {
@@ -38,6 +41,12 @@ const initialQuestions = {
 
 function decks (state = initialDecks, action) {
   switch (action.type) {
+    case ADD_DECK:
+      const { deck } = action
+      return {
+        ...state,
+        [deck.id]: deck
+      }
     case ADD_QUESTION:
       const { question } = action
       return {

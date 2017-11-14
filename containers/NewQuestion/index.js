@@ -2,35 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { addQuestion } from '../../actions';
-import { white, gray, blue } from '../../utils/colors'
+import { white, gray, blue, green } from '../../utils/colors'
 import uuidv1 from 'uuid/v1';
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-  },
-  inputContainer: {
-    backgroundColor: white,
-    marginBottom: 1,
-  },
-  submitBton: {
-    padding: 25,
-    alignItems: 'center',
-  },
-  btnText: {
-    fontSize: 30,
-    color: blue,
-  },
-  labelInput: {
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    fontSize: 20,
-  }
-})
 
 class NewQuestion extends Component {
   state = {
@@ -80,10 +53,10 @@ class NewQuestion extends Component {
           />
         </View>
         <TouchableOpacity
-          style={styles.submitBton}
+
           onPress={() => this.submit(this.state)}
         >
-          <Text style={styles.btnText}>SUBMIT</Text>
+          <Text style={styles.submitBton}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     );
@@ -96,5 +69,37 @@ function mapStateToProps({ decks }, { navigation }) {
     deck: decks[deckId]
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  inputContainer: {
+    backgroundColor: white,
+    marginBottom: 1,
+  },
+  submitBton: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: white,
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: green,
+  },
+  btnText: {
+    fontSize: 30,
+    color: blue,
+  },
+  labelInput: {
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    fontSize: 20,
+  }
+})
 
 export default connect(mapStateToProps, { addQuestion })(NewQuestion);
