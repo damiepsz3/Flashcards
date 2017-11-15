@@ -14,6 +14,15 @@ class Quiz extends Component {
     counter: 1,
     corrects: 0,
     showingQuestion: true,
+    bounceValue: new Animated.Value(1),
+  }
+
+  componentDidMount () {
+    console.log('hola');
+    Animated.sequence([
+      Animated.timing(this.state.bounceValue, { duration: 200, toValue: 1.04}),
+      Animated.spring(this.state.bounceValue, { toValue: 1, friction: 4})
+    ]).start()
   }
 
   correct = (isCorrect) => {
@@ -34,8 +43,9 @@ class Quiz extends Component {
 
   render() {
     const { questions } = this.props
-    const { counter, showingQuestion, corrects } = this.state
+    const { counter, showingQuestion, corrects, bounceValue } = this.state
 
+    console.log(bounceValue);
 
     if(counter > questions.length) {
       return (
@@ -61,11 +71,10 @@ class Quiz extends Component {
       )
     }
 
-
     const { question, answer } = questions[counter - 1]
     return (
       <View style={styles.container}>
-        <View style={styles.card}>
+        <Animated.View style={[styles.card, {transform: [{scale: bounceValue}]}]}>
           <Text style={{marginBottom: 10}}>{`${counter}/${questions.length}`}</Text>
           <Text style={styles.cardText}>
             {showingQuestion
@@ -81,7 +90,7 @@ class Quiz extends Component {
               }
             </Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
         <View>
           <TouchableOpacity onPress={() => this.correct(true)}>
             <Text style={[styles.respBtn, { backgroundColor: green }]}>
