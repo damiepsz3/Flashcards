@@ -17,12 +17,15 @@ class Quiz extends Component {
     bounceValue: new Animated.Value(1),
   }
 
-  componentDidMount () {
-    console.log('hola');
+  animate = () => {
     Animated.sequence([
       Animated.timing(this.state.bounceValue, { duration: 200, toValue: 1.04}),
       Animated.spring(this.state.bounceValue, { toValue: 1, friction: 4})
     ]).start()
+  }
+
+  componentDidMount () {
+    this.animate();
   }
 
   correct = (isCorrect) => {
@@ -31,6 +34,7 @@ class Quiz extends Component {
       corrects: isCorrect ? prevState.corrects + 1 : prevState.corrects,
       showingQuestion: true,
     }))
+    this.animate()
   }
 
   resetQuiz = () => {
@@ -39,22 +43,21 @@ class Quiz extends Component {
       corrects: 0,
       showingQuestion: true,
     })
+    this.animate()
   }
 
   render() {
     const { questions } = this.props
     const { counter, showingQuestion, corrects, bounceValue } = this.state
 
-    console.log(bounceValue);
-
     if(counter > questions.length) {
       return (
         <View style={styles.container}>
-          <View style={styles.card}>
+          <Animated.View style={[styles.card, {transform: [{scale: bounceValue}]}]}>
             <Text style={{marginBottom: 10}}>You have finished the Quiz</Text>
             <Text style={styles.cardText}>Score: {corrects} correct from {questions.length} questions</Text>
             <Text style={styles.percn}>{(corrects * 100)/questions.length}%</Text>
-          </View>
+          </Animated.View>
           <View>
             <TouchableOpacity onPress={() => this.resetQuiz()}>
               <Text style={[styles.respBtn, { backgroundColor: purple }]}>
@@ -82,7 +85,10 @@ class Quiz extends Component {
               : answer
             }
           </Text>
-          <TouchableOpacity onPress={() => this.setState(prevState =>({showingQuestion: !prevState.showingQuestion}))}>
+          <TouchableOpacity onPress={() => {
+            this.setState(prevState =>({showingQuestion: !prevState.showingQuestion}))
+            this.animate();
+          }}>
             <Text style={styles.toggleBtn}>
               {showingQuestion
                 ? 'Answer'
