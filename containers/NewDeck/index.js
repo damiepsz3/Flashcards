@@ -19,6 +19,7 @@ class NewDeck extends Component {
       id: uuidv1(),
       title: '',
     })
+    this.props.navigation.navigate('DeckView', { deck })
   }
 
   render() {
