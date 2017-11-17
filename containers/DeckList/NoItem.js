@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { white, blue, gray, green, purple } from '../../utils/colors'
 
 export default function NoItem (props) {
   return (

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import { connect } from 'react-redux';
+import { Alert } from 'react-native'
 import { addDeck } from '../../actions';
-import { white, defautlGray, blue, green } from '../../utils/colors'
 import uuidv1 from 'uuid/v1';
+import NewDeck from './NewDeck'
 
 
-class NewDeck extends Component {
+class NewDeckContainer extends Component {
   state = {
     id: uuidv1(),
     title: '',
     questions: [],
   }
 
-  submit = (deck) => {
+  submit = () => {
+    const deck = this.state
     if(deck.title === '') {
       Alert.alert(
         'Title of deck is empty',
@@ -29,56 +30,11 @@ class NewDeck extends Component {
     }
   }
 
+  setTitle = (title) => this.setState({ title })
+
   render() {
-    return (
-      <KeyboardAvoidingView style={{flex: 1}}>
-        <View style={styles.container}>
-          <Text style={styles.label}>What is the title of your new deck?</Text>
-          <TextInput
-            style={styles.titleInput}
-            placeholder='Deck Title'
-            onChangeText={title => this.setState({ title })}
-            value={this.state.title}
-          />
-          <TouchableOpacity
-            onPress={() => this.submit(this.state)}
-          >
-            <Text style={styles.submitBtn}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    );
+    return <NewDeck onSubmit={this.submit} setTitle={this.setTitle} {...this.state}/>
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    backgroundColor: white,
-  },
-  label: {
-    fontSize: 40,
-    padding: 30,
-    textAlign: 'center',
-  },
-  titleInput: {
-    paddingBottom: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    fontSize: 25,
-    textAlign: 'center'
-  },
-  submitBtn: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: white,
-    paddingRight: 20,
-    paddingLeft: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: green,
-  }
-})
-
-export default connect(null, { addDeck })(NewDeck);
+export default connect(null, { addDeck })(NewDeckContainer);
