@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { addDeck } from '../../actions';
 import { white, defautlGray, blue, green } from '../../utils/colors'
@@ -14,12 +14,19 @@ class NewDeck extends Component {
   }
 
   submit = (deck) => {
-    this.props.addDeck(deck)
-    this.setState({
-      id: uuidv1(),
-      title: '',
-    })
-    this.props.navigation.navigate('DeckView', { deck })
+    if(deck.title === '') {
+      Alert.alert(
+        'Title of deck is empty',
+        'Please provide a valid title for the deck.'
+      )
+    } else {
+      this.props.addDeck(deck)
+      this.setState({
+        id: uuidv1(),
+        title: '',
+      })
+      this.props.navigation.navigate('DeckView', { deck })
+    }
   }
 
   render() {
